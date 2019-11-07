@@ -1,0 +1,13 @@
+{
+  "name": "rock-paper-scissors",
+  "version": "0.9.0",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.13.3",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.7.6",
+    "ws": "^7.1.2"
+  }
+}
