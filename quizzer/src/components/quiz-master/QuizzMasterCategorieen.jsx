@@ -1,5 +1,6 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
+import {URL, PORT} from '../../config'
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -17,7 +18,7 @@ class CategorieenUI extends React.Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:3001/api/questions/categories';
+        const url = `${URL}:${PORT}/api/questions/categories`;
         const options = {
             method: 'GET',
             headers: {

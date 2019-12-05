@@ -1,5 +1,6 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
+import {URL, PORT} from '../../config'
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import HeaderTitel from "../HeaderTitel";
@@ -28,7 +29,7 @@ class TeamBeantwoordVraagUI extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        const url = `http://localhost:3001/api/game/${this.props.gameRoomName}/ronde/${this.props.roundNumber}/question/${this.props.questionNumber}/team/${this.props.teamName}/answer`;
+        const url = `${URL}:${PORT}/api/game/${this.props.gameRoomName}/ronde/${this.props.roundNumber}/question/${this.props.questionNumber}/team/${this.props.teamName}/answer`;
 
         let data = {
             teamAnswer: this.state.teamAnswer

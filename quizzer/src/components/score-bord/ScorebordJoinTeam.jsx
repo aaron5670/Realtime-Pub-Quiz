@@ -1,5 +1,6 @@
 import React from "react";
 import * as ReactRedux from "react-redux";
+import {URL, PORT} from '../../config'
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -28,7 +29,7 @@ class ScorebordJoinTeamUI extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        const url = `http://localhost:3001/api/games/${this.state.gameRoomName}/scoreboard`;
+        const url = `${URL}:${PORT}/api/games/${this.state.gameRoomName}/scoreboard`;
 
         const options = {
             method: 'GET',

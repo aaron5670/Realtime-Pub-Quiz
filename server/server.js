@@ -1,9 +1,10 @@
 'use strict';
+const fs = require('fs');
+const https = require('https');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const express = require('express');
 const cors = require('cors');
-const http = require('http');
 const WebSocket = require('ws');
 const dbConfig = require('./config');
 
@@ -24,16 +25,31 @@ const sessionParser = session({
 });
 app.use(sessionParser);
 
-// Create HTTP server by ourselves, in order to attach websocket server.
-const httpServer = http.createServer(app);
+// Certificate
+const privateKey = fs.readFileSync('/opt/psa/var/modules/letsencrypt/etc/live/aaronvandenberg.nl/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/opt/psa/var/modules/letsencrypt/etc/live/aaronvandenberg.nl/cert.pem', 'utf8');
+const ca = fs.readFileSync('/opt/psa/var/modules/letsencrypt/etc/live/aaronvandenberg.nl/chain.pem', 'utf8');
+
+const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
+};
+
+const httpsServer = https.createServer(credentials, app);
+
+const server = https.createServer({
+    cert: certificate,
+    key: privateKey,
+});
 
 // Create the Web socket server.
-const websocketServer = new WebSocket.Server({noServer: true});
+const websocketServer = new WebSocket.Server({ server });
 
 // Require all RESTFULL API Routes
 app.use('/api', require('./routes/api-routes'));
 
-httpServer.on('upgrade', (req, networkSocket, head) => {
+httpsServer.on('upgrade', (req, networkSocket, head) => {
     sessionParser(req, {}, () => {
         websocketServer.handleUpgrade(req, networkSocket, head, newWebSocket => {
             websocketServer.emit('connection', newWebSocket, req);
@@ -314,11 +330,11 @@ websocketServer.on('connection', (socket, req) => {
 
 // Start the server.
 const port = process.env.PORT || 3001;
-httpServer.listen(port, () => {
-    mongoose.connect(`mongodb://${dbConfig.USERNAME}:${dbConfig.PASSWORD}@${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+httpsServer.listen(port, () => {
+    mongoose.connect(`mongodb+srv://${dbConfig.USERNAME}:${dbConfig.PASSWORD}@${dbConfig.HOST}/${dbConfig.DB}?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }, () => {
-        console.log(`game server started on port http://localhost:${port}`);
+        console.log(`Game server started on port https://aaronvandenberg.nl:${port}`);
     });
 });

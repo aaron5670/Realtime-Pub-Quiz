@@ -1,4 +1,5 @@
 import {theStore} from './index'
+import {URL, PORT} from './config'
 import {
     createCurrentCategoryAction, createCurrentQuestionAction, createCurrentQuestionAnswerAction,
     getGameRoomTeamsAction,
@@ -11,8 +12,7 @@ import {
     createAddCurrentTeamsScoreboardAction, createIsAnsweredScoreboardAction,
 } from "./action-reducers/createScorebord-actionReducer";
 
-const port = 3001;
-const serverHostname = `${window.location.hostname}:${port}`;
+const serverHostname = `aaronvandenberg.nl:${PORT}`;
 let theSocket;
 
 export function openWebSocket() {
@@ -22,7 +22,7 @@ export function openWebSocket() {
         theSocket.onclose = null;
         theSocket.close();
     }
-    theSocket = new WebSocket(`ws://${serverHostname}`);
+    theSocket = new WebSocket(`wss://${serverHostname}`);
 
     // this method is not in the official API, but it's very useful.
     theSocket.sendJSON = function (data) {
@@ -161,7 +161,7 @@ export function sendNewTeamMSG() {
 */
 export function deleteTeam(gameRoom, teamName) {
     if (gameRoom && teamName) {
-        const url = `http://localhost:3001/api/games/${gameRoom}/team/${teamName}`;
+        const url = `${URL}:${PORT}/api/games/${gameRoom}/team/${teamName}`;
 
         const options = {
             method: 'DELETE',
@@ -211,7 +211,7 @@ function getTeams() {
     }
 
     if (gameRoom) {
-        const url = `http://localhost:3001/api/games/${gameRoom}/teams`;
+        const url = `${URL}:${PORT}/api/games/${gameRoom}/teams`;
 
         const options = {
             method: 'GET',
@@ -246,7 +246,7 @@ function getTeams() {
 */
 export function acceptTeam(gameRoom, teamName) {
     if (gameRoom && teamName) {
-        const url = `http://localhost:3001/api/games/${gameRoom}/team/${teamName}`;
+        const url = `${URL}:${PORT}/api/games/${gameRoom}/team/${teamName}`;
 
         const options = {
             method: 'PUT',
@@ -285,7 +285,7 @@ function sendTeamAcceptMSG(teamName) {
 */
 export function startGame(gameRoom) {
     if (gameRoom) {
-        const url = `http://localhost:3001/api/games/${gameRoom}`;
+        const url = `${URL}:${PORT}/api/games/${gameRoom}`;
 
         let data = {
             gameStatus: 'choose_category'
@@ -328,7 +328,7 @@ function sendChooseCategoriesMSG() {
 export function startRound(gameRoom, categories) {
     if (gameRoom) {
 
-        const url = `http://localhost:3001/api/games/${gameRoom}/ronde`;
+        const url = `${URL}:${PORT}/api/games/${gameRoom}/ronde`;
 
         let options;
         if (categories) {
@@ -386,7 +386,7 @@ function sendChooseQuestionsMSG() {
 */
 export function startQuestion(gameRoom, rondeID, question) {
     if (gameRoom) {
-        const url = `http://localhost:3001/api/game/${gameRoom}/ronde/${rondeID}/question`;
+        const url = `${URL}:${PORT}/api/game/${gameRoom}/ronde/${rondeID}/question`;
 
         let options;
         if (question) {
@@ -469,7 +469,7 @@ export function getQuestionAnswers() {
 
     if (gameRoom && roundNumber && question) {
 
-        const url = `http://localhost:3001/api/game/${gameRoom}/ronde/${roundNumber}/question/${question}/answers`;
+        const url = `${URL}:${PORT}/api/game/${gameRoom}/ronde/${roundNumber}/question/${question}/answers`;
         const options = {
             method: 'GET',
             headers: {
@@ -519,7 +519,7 @@ export function sendGetTeamIsAnsweredMSG(teamName, isAnswered) {
 | Change a team answer to correct or incorrect (for Quizmaster)
 */
 export function teamAnswerIsCorrect(gameRoomName, roundNumber, questionNumber, teamName, isCorrect) {
-    const url = `http://localhost:3001/api/game/${gameRoomName}/ronde/${roundNumber}/question/${questionNumber}/team/${teamName}/answer`;
+    const url = `${URL}:${PORT}/api/game/${gameRoomName}/ronde/${roundNumber}/question/${questionNumber}/team/${teamName}/answer`;
 
     let data = {
         isCorrect: isCorrect
@@ -560,7 +560,7 @@ export function sendSendAnswersToScoreboardMSG() {
 | Change game status to QUESTION CLOSED
 */
 export function closeCurrentQuestion(gameRoomName, roundNumber) {
-    const url = `http://localhost:3001/api/game/${gameRoomName}/ronde/${roundNumber}/question`;
+    const url = `${URL}:${PORT}/api/game/${gameRoomName}/ronde/${roundNumber}/question`;
 
     const options = {
         method: 'PUT',
@@ -598,7 +598,7 @@ function sendQuestionClosedMSG() {
 */
 export function endGame(gameRoom) {
     if (gameRoom) {
-        const url = `http://localhost:3001/api/games/${gameRoom}`;
+        const url = `${URL}:${PORT}/api/games/${gameRoom}`;
 
         let data = {
             gameStatus: 'end_game'

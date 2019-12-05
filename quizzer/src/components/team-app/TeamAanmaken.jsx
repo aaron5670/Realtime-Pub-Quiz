@@ -1,4 +1,5 @@
 import React from "react";
+import {URL, PORT} from '../../config'
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -63,7 +64,7 @@ class TeamAanmakenUI extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        const url = 'http://localhost:3001/api/team';
+        const url = `${URL}:${PORT}/api/team`;
         let data = {
             gameRoomName: this.state.gameRoomName,
             teamName: this.state.teamName,

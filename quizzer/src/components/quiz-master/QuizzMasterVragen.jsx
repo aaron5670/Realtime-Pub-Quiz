@@ -1,4 +1,5 @@
 import React from "react";
+import {URL, PORT} from '../../config'
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -17,7 +18,7 @@ class VragenUI extends React.Component {
     }
 
     componentDidMount() {
-        const url = `http://localhost:3001/api/game/${this.props.gameRoom}/ronde/${this.props.roundNumber}/questions`;
+        const url = `${URL}:${PORT}/api/game/${this.props.gameRoom}/ronde/${this.props.roundNumber}/questions`;
         const options = {
             method: 'GET',
             headers: {

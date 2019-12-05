@@ -1,5 +1,6 @@
 import React from "react";
 import * as ReactRedux from 'react-redux';
+import {URL, PORT} from '../../config'
 import {
     createGameRoomAction,
     createGameFormValidationAction, createCurrentGameStatusAction
@@ -33,7 +34,7 @@ class GameAanmakenUI extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        const url = 'http://localhost:3001/api/game';
+        const url = `${URL}:${PORT}/api/game`;
         let data = {
             gameRoomName: this.state.gameRoomName
         };
