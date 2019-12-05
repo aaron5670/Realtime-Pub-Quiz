@@ -31,4 +31,3 @@ var exports = module.exports = {USERNAME, PASSWORD, HOST, PORT, DB};
 5. Run the server: ``node server.js``.
 6. Run the Webpack server (client) ```npm start```.
 7. Go to http://localhost:3000.
-
