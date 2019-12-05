@@ -61,7 +61,7 @@ typings/
 .next
 
 server/config.js
-.idea
+.idea/
 .idea/.gitignore
 .idea/eindopdracht-DWA.iml
 .idea/jsLibraryMappings.xml
