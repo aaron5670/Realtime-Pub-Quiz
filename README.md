@@ -1,6 +1,7 @@
 # Realtime Pub Quiz Game
 **A Dutch realtime pub quiz**
-This project was made as a school assignment
+This project was made as a school assignment.\
+**See live demo:** [Demo](https://quizzer.now.sh/)
 
 
 ### Features
