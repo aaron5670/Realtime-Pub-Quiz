@@ -61,11 +61,10 @@ typings/
 .next
 
 server/config.js
-
+.idea
 .idea/.gitignore
 .idea/eindopdracht-DWA.iml
 .idea/jsLibraryMappings.xml
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
-server/_server.js
