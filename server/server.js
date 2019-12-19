@@ -1,6 +1,6 @@
 'use strict';
 const fs = require('fs');
-const https = require('https');
+const http = require('http');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const express = require('express');
@@ -25,23 +25,9 @@ const sessionParser = session({
 });
 app.use(sessionParser);
 
-// SSL Certificate
-const privateKey = fs.readFileSync('/opt/psa/var/modules/letsencrypt/etc/live/aaronvandenberg.nl/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/opt/psa/var/modules/letsencrypt/etc/live/aaronvandenberg.nl/cert.pem', 'utf8');
-const ca = fs.readFileSync('/opt/psa/var/modules/letsencrypt/etc/live/aaronvandenberg.nl/chain.pem', 'utf8');
+const httpServer = http.createServer(app);
 
-const credentials = {
-    key: privateKey,
-    cert: certificate,
-    ca: ca
-};
-
-const httpsServer = https.createServer(credentials, app);
-
-const server = https.createServer({
-    cert: certificate,
-    key: privateKey,
-});
+const server = http.createServer({});
 
 // Create the Web socket server.
 const websocketServer = new WebSocket.Server({ server });
@@ -49,7 +35,7 @@ const websocketServer = new WebSocket.Server({ server });
 // Require all RESTFULL API Routes
 app.use('/api', require('./routes/api-routes'));
 
-httpsServer.on('upgrade', (req, networkSocket, head) => {
+httpServer.on('upgrade', (req, networkSocket, head) => {
     sessionParser(req, {}, () => {
         websocketServer.handleUpgrade(req, networkSocket, head, newWebSocket => {
             websocketServer.emit('connection', newWebSocket, req);
@@ -329,12 +315,12 @@ websocketServer.on('connection', (socket, req) => {
 });
 
 // Start the server.
-const port = process.env.PORT || 3001;
-httpsServer.listen(port, () => {
+const port = 3001;
+httpServer.listen(port, () => {
     mongoose.connect(`mongodb+srv://${dbConfig.USERNAME}:${dbConfig.PASSWORD}@${dbConfig.HOST}/${dbConfig.DB}?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }, () => {
-        console.log(`Game server started on port https://aaronvandenberg.nl:${port}`);
+        console.log(`Game server started on port http://localhost:${port}`);
     });
 });

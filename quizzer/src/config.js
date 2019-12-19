@@ -1,5 +1,5 @@
 //SERVER URL + PORT
-const URL = "https://aaronvandenberg.nl";
+const URL = "http://localhost";
 const PORT = 3001;
 
 module.exports = {URL, PORT};
