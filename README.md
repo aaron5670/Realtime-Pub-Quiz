@@ -1,8 +1,10 @@
 # Realtime Pub Quiz Game
 **A Dutch realtime pub quiz**
 This project was made as a school assignment.\
-**See live demo:** [Demo](https://quizzer.now.sh/)
+**See live demo:** [Demo](https://quizzer.now.sh/)\
+*(Demo is in Dutch language)*
 
+![Screenshot](https://raw.githubusercontent.com/aaron5670/Realtime-Pub-Quizz/master/screenshot.png)
 
 ### Features
 - Build with Nodejs 8.1
