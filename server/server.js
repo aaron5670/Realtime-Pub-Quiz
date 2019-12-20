@@ -49,6 +49,9 @@ const websocketServer = new WebSocket.Server({ server });
 // Require all RESTFULL API Routes
 app.use('/api', require('./routes/api-routes'));
 
+// Require all RESTFULL API Routes
+app.use('/api', require('./routes/init'));
+
 httpsServer.on('upgrade', (req, networkSocket, head) => {
     sessionParser(req, {}, () => {
         websocketServer.handleUpgrade(req, networkSocket, head, newWebSocket => {

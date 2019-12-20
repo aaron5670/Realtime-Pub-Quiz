@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "Quizzer App",
+    "slug": "Quizzer-App",
+    "privacy": "public",
+    "sdkVersion": "35.0.0",
+    "platforms": [
+      "android"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#1A2138"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.myapp.myappcompany"
+    }
+  }
+}

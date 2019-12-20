@@ -1,0 +1,14 @@
+diff --git a/node_modules/react-native-swipe-cards/SwipeCards.js b/node_modules/react-native-swipe-cards/SwipeCards.js
+index fd8029f..2282e78 100644
+--- a/node_modules/react-native-swipe-cards/SwipeCards.js
++++ b/node_modules/react-native-swipe-cards/SwipeCards.js
+@@ -157,6 +157,9 @@ export default class SwipeCards extends Component {
+     this.cardAnimation = null;
+ 
+     this._panResponder = PanResponder.create({
++      onStartShouldSetPanResponder: (e, gestureState) => {
++        return true;
++      },
+       onMoveShouldSetPanResponderCapture: (e, gestureState) => {
+         if (Math.abs(gestureState.dx) > 3 || Math.abs(gestureState.dy) > 3) {
+           this.props.onDragStart();
