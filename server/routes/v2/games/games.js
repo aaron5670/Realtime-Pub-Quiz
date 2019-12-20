@@ -34,8 +34,7 @@ games.get('/', isAdmin(), async (req, res) => {
     })
 });
 
-//ToDo: add admin middleware
-games.delete('/:id', async (req, res) => {
+games.delete('/:id', isAdmin(), async (req, res) => {
     const id = req.params.id;
     await Games.findOneAndDelete(id);
     res.status(200)
