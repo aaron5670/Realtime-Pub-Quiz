@@ -21,7 +21,11 @@ app.options("*", cors({
 const sessionParser = session({
     saveUninitialized: true,
     secret: 'DFJadslkfjgkf$%dfgjlsdg',
-    resave: true
+    resave: true,
+    cookie : {
+        sameSite: 'None',
+        secure: true,
+    }
 });
 app.use(sessionParser);
 
